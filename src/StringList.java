@@ -1,4 +1,4 @@
-public interface StringList<String> {
+public interface StringList {
     // Добавление элемента.
     // Вернуть добавленный элемент
     // в качестве результата выполнения.
