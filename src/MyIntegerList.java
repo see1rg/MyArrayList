@@ -14,6 +14,18 @@ public class MyIntegerList implements IntegerList {
         values = new Integer[10];
     }
 
+    public static void sort(Integer[] values) {
+        for (int i = 1; i < values.length; i++) {
+            int temp = values[i];
+            int j = i;
+            while (j > 0 && values[j - 1] >= temp) {
+                values[j] = values[j - 1];
+                j--;
+            }
+            values[j] = temp;
+        }
+    }
+
     @Override
     public Integer add(Integer item) {
         validateSize();
@@ -28,7 +40,7 @@ public class MyIntegerList implements IntegerList {
         validateItem(item);
         validateIndex(index);
         if (index == size) {
-            values[size++]=item;
+            values[size++] = item;
             return item;
         }
         System.arraycopy(values, index, values, index + 1, size - index);
@@ -50,9 +62,9 @@ public class MyIntegerList implements IntegerList {
         validateItem(item);
         int index = indexOf(item);
         Integer removeInteger = values[index];
-                System.arraycopy(values, index, values, index + 1, size - index);
-                size--;
-                return removeInteger;
+        System.arraycopy(values, index, values, index + 1, size - index);
+        size--;
+        return removeInteger;
     }
 
     @Override
@@ -67,9 +79,22 @@ public class MyIntegerList implements IntegerList {
     @Override
     public boolean contains(Integer item) { // todo  осуществлена сортировка и вызван метод бинарного поиска.
         validateItem(item);
-        for (int i = 0; i < size; i++) {
-            if (item.equals(values[i])) {
+        sort(values);
+
+        int min = 0;
+        int max = values.length - 1;
+
+        while (min <= max) {
+            int mid = (min + max) / 2;
+
+            if (item == values[mid]) {
                 return true;
+            }
+
+            if (item < values[mid]) {
+                max = mid - 1;
+            } else {
+                min = mid + 1;
             }
         }
         return false;
@@ -79,7 +104,7 @@ public class MyIntegerList implements IntegerList {
     public int indexOf(Integer item) {
         validateItem(item);
         for (int i = 0; i < size; i++) {
-            if (item.equals(values[i])){
+            if (item.equals(values[i])) {
                 return i;
             }
         }
@@ -89,8 +114,8 @@ public class MyIntegerList implements IntegerList {
     @Override
     public int lastIndexOf(Integer item) {
         validateItem(item);
-        for (int i = size-1; i >= 0; i--) {
-            if (item.equals(values[i])){
+        for (int i = size - 1; i >= 0; i--) {
+            if (item.equals(values[i])) {
                 return i;
             }
         }
@@ -125,7 +150,7 @@ public class MyIntegerList implements IntegerList {
 
     @Override
     public Integer[] toArray() {
-        return Arrays.copyOf(values,size);
+        return Arrays.copyOf(values, size);
     }
 
     void validateIndex(int index) {
@@ -140,16 +165,9 @@ public class MyIntegerList implements IntegerList {
         }
     }
 
-    void validateSize(){
+    void validateSize() {
         if (size == values.length) {
             throw new IndexOutOfBoundsException();
         }
     }
-
-
-
-
-
-
-
 }
