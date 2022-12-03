@@ -1,21 +1,21 @@
 import java.util.Arrays;
 import java.util.MissingFormatArgumentException;
 
-public class MyStringList implements StringList {
+public class MyIntegerList implements IntegerList {
 
-    private final String[] values;
+    private final Integer[] values;
     private int size;
 
-    public MyStringList(int initSize) {
-        values = new String[initSize];
+    public MyIntegerList(int initSize) {
+        values = new Integer[initSize];
     }
 
-    public MyStringList() {
-        values = new String[10];
+    public MyIntegerList() {
+        values = new Integer[10];
     }
 
     @Override
-    public String add(String item) {
+    public Integer add(Integer item) {
         validateSize();
         validateItem(item);
         values[size++] = item;
@@ -23,7 +23,7 @@ public class MyStringList implements StringList {
     }
 
     @Override
-    public String add(int index, String item) {
+    public Integer add(int index, Integer item) {
         validateSize();
         validateItem(item);
         validateIndex(index);
@@ -38,7 +38,7 @@ public class MyStringList implements StringList {
     }
 
     @Override
-    public String set(int index, String item) {
+    public Integer set(int index, Integer item) {
         validateItem(item);
         validateIndex(index);
         values[index] = item;
@@ -46,26 +46,26 @@ public class MyStringList implements StringList {
     }
 
     @Override
-    public String remove(String item) {
+    public Integer remove(Integer item) {
         validateItem(item);
         int index = indexOf(item);
-                String removeString = values[index];
+        Integer removeInteger = values[index];
                 System.arraycopy(values, index, values, index + 1, size - index);
                 size--;
-                return removeString;
+                return removeInteger;
     }
 
     @Override
-    public String remove(int index) {
+    public Integer remove(int index) {
         validateIndex(index);
-        String removeString = values[index];
+        Integer removeInteger = values[index];
         System.arraycopy(values, index, values, index + 1, size - index);
         size--;
-        return removeString;
+        return removeInteger;
     }
 
     @Override
-    public boolean contains(String item) {
+    public boolean contains(Integer item) { // todo  осуществлена сортировка и вызван метод бинарного поиска.
         validateItem(item);
         for (int i = 0; i < size; i++) {
             if (item.equals(values[i])) {
@@ -76,7 +76,7 @@ public class MyStringList implements StringList {
     }
 
     @Override
-    public int indexOf(String item) {
+    public int indexOf(Integer item) {
         validateItem(item);
         for (int i = 0; i < size; i++) {
             if (item.equals(values[i])){
@@ -87,7 +87,7 @@ public class MyStringList implements StringList {
     }
 
     @Override
-    public int lastIndexOf(String item) {
+    public int lastIndexOf(Integer item) {
         validateItem(item);
         for (int i = size-1; i >= 0; i--) {
             if (item.equals(values[i])){
@@ -98,13 +98,13 @@ public class MyStringList implements StringList {
     }
 
     @Override
-    public String get(int index) {
+    public Integer get(int index) {
         validateIndex(index);
         return values[index];
     }
 
     @Override
-    public boolean equals(StringList otherList) {
+    public boolean equals(IntegerList otherList) {
         return Arrays.equals(this.toArray(), otherList.toArray());
     }
 
@@ -124,8 +124,7 @@ public class MyStringList implements StringList {
     }
 
     @Override
-    public String[] toArray() {
-
+    public Integer[] toArray() {
         return Arrays.copyOf(values,size);
     }
 
@@ -135,7 +134,7 @@ public class MyStringList implements StringList {
         }
     }
 
-    void validateItem(String item) {
+    void validateItem(Integer item) {
         if (item == null) {
             throw new MissingFormatArgumentException(" not Null");
         }
@@ -146,4 +145,11 @@ public class MyStringList implements StringList {
             throw new IndexOutOfBoundsException();
         }
     }
+
+
+
+
+
+
+
 }
