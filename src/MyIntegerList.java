@@ -77,7 +77,7 @@ public class MyIntegerList implements IntegerList {
     }
 
     @Override
-    public boolean contains(Integer item) { // todo  осуществлена сортировка и вызван метод бинарного поиска.
+    public boolean contains(Integer item) { //   осуществлена сортировка и вызван метод бинарного поиска.
         validateItem(item);
         sort(values);
 
