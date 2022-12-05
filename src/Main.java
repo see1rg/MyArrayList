@@ -5,6 +5,22 @@ public class Main {
     public static void main(String[] args) {
 
         Integer[] arr1 = new Integer[100_000];
+//        MyIntegerList example = new MyIntegerList();
+//        example.add(3);
+//        example.add(30);
+//        example.add(31);
+//        example.add(32);
+//        example.add(33);
+//        example.add(34);
+//        example.add(3);
+//        example.add(34);
+//        example.add(3);
+//        example.add(3);
+//        example.add(3);
+//        example.add(3);
+//        example.add(3);
+//        example.add(3);
+//        System.out.println(example.toString());
         for (int i = 0; i < arr1.length; i++) {
             arr1[i] = getRandom();
         }
@@ -17,8 +33,8 @@ public class Main {
 
         arr = Arrays.copyOf(arr1, arr1.length);
         long start1 = System.currentTimeMillis();
-        MyIntegerList.sort(arr);
-        System.out.println("sortInsertion - " + (System.currentTimeMillis() - start1));
+        MyIntegerList.sort(arr,0, arr.length-1);
+        System.out.println("QuickSort - " + (System.currentTimeMillis() - start1));
 
         arr = Arrays.copyOf(arr1, arr1.length);
         long start = System.currentTimeMillis();

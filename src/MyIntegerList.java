@@ -1,9 +1,12 @@
+import jdk.internal.util.ArraysSupport;
+
 import java.util.Arrays;
 import java.util.MissingFormatArgumentException;
 
 public class MyIntegerList implements IntegerList {
 
-    private final Integer[] values;
+    private static final int DEFAULT_CAPACITY = 10;
+    private Integer[] values;
     private int size;
 
     public MyIntegerList(int initSize) {
@@ -14,16 +17,46 @@ public class MyIntegerList implements IntegerList {
         values = new Integer[10];
     }
 
-    public static void sort(Integer[] values) {
-        for (int i = 1; i < values.length; i++) {
-            int temp = values[i];
-            int j = i;
-            while (j > 0 && values[j - 1] >= temp) {
-                values[j] = values[j - 1];
-                j--;
-            }
-            values[j] = temp;
+//    public static void sort(Integer[] values) {
+//        for (int i = 1; i < values.length; i++) {
+//            int temp = values[i];
+//            int j = i;
+//            while (j > 0 && values[j - 1] >= temp) {
+//                values[j] = values[j - 1];
+//                j--;
+//            }
+//            values[j] = temp;
+//        }
+//    }
+
+    public static void sort(Integer[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            sort(arr, begin, partitionIndex - 1);
+            sort(arr, partitionIndex + 1, end);
         }
+    }
+
+    private static int partition(Integer[] arr, int begin, int end) {
+        int pivot = arr[end];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+                swapElements(arr, i, j);
+            }
+        }
+
+        swapElements(arr, i + 1, end);
+        return i + 1;
+    }
+
+    private static void swapElements(Integer[] arr, int left, int right) {
+        int temp = arr[left];
+        arr[left] = arr[right];
+        arr[right] = temp;
     }
 
     @Override
@@ -79,7 +112,7 @@ public class MyIntegerList implements IntegerList {
     @Override
     public boolean contains(Integer item) { //   осуществлена сортировка и вызван метод бинарного поиска.
         validateItem(item);
-        sort(values);
+        sort(values,0,values.length);
 
         int min = 0;
         int max = values.length - 1;
@@ -165,9 +198,32 @@ public class MyIntegerList implements IntegerList {
         }
     }
 
+
+    private Object[] grow(int minCapacity) {
+        int oldCapacity = values.length;
+        if (oldCapacity > 0) {
+            int newCapacity = values.length + (int)(values.length * 0.5D);
+            return values = Arrays.copyOf(values, newCapacity);
+        } else {
+            return values = new Integer[Math.max(DEFAULT_CAPACITY, minCapacity)];
+        }
+    }
+
+    private Object[] grow() {
+        return grow(size + 1);
+    }
+
     void validateSize() {
         if (size == values.length) {
-            throw new IndexOutOfBoundsException();
+            grow();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "MyIntegerList{" +
+                "values=" + Arrays.toString(values) +
+                ", size=" + size +
+                '}';
     }
 }
