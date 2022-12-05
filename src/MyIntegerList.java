@@ -202,7 +202,7 @@ public class MyIntegerList implements IntegerList {
     private Object[] grow(int minCapacity) {
         int oldCapacity = values.length;
         if (oldCapacity > 0) {
-            int newCapacity = values.length + (int)(values.length * 0.5D);
+            int newCapacity = values.length + values.length / 2;
             return values = Arrays.copyOf(values, newCapacity);
         } else {
             return values = new Integer[Math.max(DEFAULT_CAPACITY, minCapacity)];
